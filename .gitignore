@@ -1,5 +1,6 @@
 *.iml
-.idea
+.idea/
 .DS_Store
 
-lib
+lib/
+_js/
