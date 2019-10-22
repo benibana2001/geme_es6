@@ -14,7 +14,7 @@
         r.push(resource.image.load("bg", "img/bg.png"));
         r.push(resource.image.load("_tkn0", "img/token0.png"));
         r.push(resource.image.load("_tkn1", "img/token1.png"));
-
+        console.log(r);
         Promise.all(r).then(() => {
             let imgs = resource.image.imgs;
             for (let key in imgs) {

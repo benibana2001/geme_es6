@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>index-203-load_font</title>
+    <!---->
+    <link rel="stylesheet" type="text/css" href="fnt/ArchivoBlack.css" />
+    <!---->
+</head>
+<body>
+<!---->
+<div id="reversi"></div>
+<!---->
+<script src="js/game.core.js"></script>
+<script src="js/game.canvas.js"></script>
+<script src="js/resource.font.js"></script>
+<!---->
+<script>
+    (() => {
+        let r = [];
+        r.push(resource.font.load("serif", "ArchivoBlack, serif"));
+        //
+        // Promiseがresolveするのを待つ
+        Promise.all(r)
+            .then(() => {
+                let sz = game.core.getFitSz(10, 11);
+                let c = game.canvas.initCnvs("reversi", sz.w, sz.h);
+                // 文字描画
+                c.cntx.fillStyle = "#000";
+                c.cntx.textAlign = "center";
+                c.cntx.textBaseline = "middle";
+                console.log(c.cntx.font);
+                c.cntx.font = (c.w * 0.1 | 0) + "px 'ArchivoBlack";
+                console.log(c.cntx.font);
+                c.cntx.fillText("Abcdefghijklmn", c.w / 2, c.h / 2);
+            });
+    })();
+
+</script>
+</body>
+</html>

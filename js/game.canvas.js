@@ -6,7 +6,7 @@ if (window.game.canvas === undefined) window.game.canvas = {};
 
     _t.scl = 1;
 
-    _t.getCnvs = (w, h, scl) => {
+    _t.genCnvs = (w, h, scl) => {
         if (scl === undefined) {scl = 1}
         let cnvs = document.createElement("canvas");
         console.log(cnvs);
@@ -25,7 +25,7 @@ if (window.game.canvas === undefined) window.game.canvas = {};
 
     _t.initCnvs = (id, w, h, scl) => {
         _t.scl = scl;
-        let c = _t.getCnvs(w, h, scl);
+        let c = _t.genCnvs(w, h, scl);
         let elem = document.getElementById(id);
         elem.appendChild(c.cnvs);
         return c;

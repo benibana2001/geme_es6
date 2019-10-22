@@ -3,11 +3,11 @@ if (window.resource.image === undefined) window.resource.image = {};
 
 (() => {
     let _t = resource.image;
-
+    //
     _t.imgs = {};
-
+    //
     _t.load = (nm, url) => {
-        return new Promise((resolve, reject) => {
+        let func = (resolve, reject) => {
             let img = _t.imgs[nm] = new Image();
             img.onload = (() => {
                 let msg = "load img: " + nm;
@@ -15,6 +15,7 @@ if (window.resource.image === undefined) window.resource.image = {};
                 resolve(msg);
             });
             img.src = url;
-        });
+        };
+        return new Promise(func);
     }
 })();
