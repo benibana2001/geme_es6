@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>index-201-init_canvas</title>
+</head>
+<body>
+<!---->
+<div id="reversi"></div>
+<!---->
+<script src="js/game.core.js"></script>
+<script src="js/game.canvas.js"></script>
+<!--<script src="lib/jquery.min.js"></script>-->
+<!--<script src="js/_game.core.js"></script>-->
+<!--<script src="js/_game.canvas.js"></script>-->
+<!---->
+<script>
+    (() => {
+        let id = "reversi";
+        let sz = game.core.getFitSz(10, 11);
+        let c = game.canvas.initCnvs(id, sz.w, sz.h);
+        //
+        c.cntx.fillStyle = "#faa";
+        c.cntx.fillRect(0, 0, c.w, c.h);
+
+    })();
+
+    /*
+    $(function () {
+        // 縦横比固定でキャンバス作成
+        var id = "reversi";
+        var sz = game.core.getFitSz(10, 11);
+        var c = game.canvas.initCnvs(id, sz.w, sz.h);
+
+        // 全面色塗り
+        c.cntx.fillStyle = "#faa";
+        c.cntx.fillRect(0, 0, c.w, c.h);
+    });
+    */
+</script>
+</body>
+</html>
