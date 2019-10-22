@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index-202-load_image</title>
+</head>
+<body>
+<!---->
+<script src="js/resource.image.js"></script>
+<!---->
+<script>
+    (() => {
+        let r = [];
+        r.push(resource.image.load("bg", "img/bg.png"));
+        r.push(resource.image.load("_tkn0", "img/token0.png"));
+        r.push(resource.image.load("_tkn1", "img/token1.png"));
+
+        Promise.all(r).then(() => {
+            let imgs = resource.image.imgs;
+            for (let key in imgs) {
+                console.log(imgs[key].src);
+                let elBody = document.body;
+                let elImg = document.createElement('img');
+                elImg.src = imgs[key].src;
+                elBody.appendChild(elImg);
+            }
+        });
+    })();
+</script>
+</body>
+</html>
