@@ -29,7 +29,6 @@
                 display: "block"
             };
 
-
             // =====================================
             mkBtn("開始", css, () => {
                 resource.sound.play("bgm0");
@@ -79,7 +78,7 @@
         // let elBody = document.body;
         let mkBtn = (nm, css, cb, parent) => {
             let elBtn = document.createElement("button");
-            elBtn.value = nm;
+            elBtn.textContent = nm;
             //
             let style = elBtn.style;
             style.width = css.width;

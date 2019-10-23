@@ -14,6 +14,12 @@ if (window.resource.sound === undefined) window.resource.sound = {};
     _t.seMax = 8;// SEの同時発音数
     _t.bgmNow = null;// 現在再生中のbgm名
 
+    _t.event = {};
+
+    _t.event.rstCurTm = (aud) => {
+        _t.rstCurTm(aud, "play");
+    };
+
     // アロー関数の場合は危険か
     let Sound = function () {
         this.audio = null;// サウンドファイルを登録
@@ -63,8 +69,11 @@ if (window.resource.sound === undefined) window.resource.sound = {};
 
                 // プレロード準備完了時の処理
                 // todo: resource.sound.js:66 Uncaught (in promise) TypeError: eAudio.addEventListener is not a function
-                let eAudio = document.getElementsByTagName(_t.snds[nm].audio);
+                // getElementsByTagName はNodeListを返す
+
+                let eAudio = _t.snds[nm].audio;
                 eAudio.addEventListener("error", (event) => {
+                    // console.log(event);
                     _t.snds[nm].audio = undefined;
                     let msg = "err snd: " + nm;
                     console.log(msg);
@@ -72,6 +81,7 @@ if (window.resource.sound === undefined) window.resource.sound = {};
                     clearTimeout(id);
                 });
                 eAudio.addEventListener("canplaythrough", (event) => {
+                    // console.log(event);
                     let msg = "load snd: " + nm;
                     console.log(msg);
                     resolve(msg);
@@ -116,8 +126,8 @@ if (window.resource.sound === undefined) window.resource.sound = {};
         // ループしないようにしておく
         if (typeof aud.loop == "boolean") aud.loop = false;// デバイスによりloopの値が異なる
         // 再生終了時に行うコールバックの設定
-        let eAudio = document.getElementsByTagName(aud);
-        eAudio.removeEventListener("ended");
+        let eAudio = aud;
+        eAudio.removeEventListener("ended", _t.event.rstCurTm);
         if (typeof cb == "function") {
             eAudio.addEventListener("ended", cb);
         }
@@ -138,9 +148,10 @@ if (window.resource.sound === undefined) window.resource.sound = {};
         } else {
             let eAudio = document.getElementsByTagName(audio);
             eAudio.removeEventListener("ended");
-            eAudio.addEventListener("ended", () => {
-                _t.rstCurTm(aud, "play");
-            })
+            eAudio.addEventListener("ended", _t.event.rstCurTm);
+            // eAudio.addEventListener("ended", () => {
+            //     _t.rstCurTm(aud, "play");
+            // })
         }
         aud.play();
     };
@@ -154,8 +165,8 @@ if (window.resource.sound === undefined) window.resource.sound = {};
         if (_t.chckUnbl(nm)) return;
 
         let aud = _t.snds[nm].audio;
-        let eAudio = document.getElementsByTagName(aud);
-        eAudio.removeEventListener("ended");
+        let eAudio = aud;
+        eAudio.removeEventListener("ended", _t.event.rstCurTm);
         _t.rstCurTm(aud, "pause");// 再生位置を0にする
     };
 
@@ -178,9 +189,12 @@ if (window.resource.sound === undefined) window.resource.sound = {};
         if (nm !== _t.bgmNow) {
             _t.stop(_t.bgmNow);
         }
+        _t.bgmNow = nm;
 
         if (cb) {
             _t.play(nm, cb)
-        } else _t.playLoop(nm);
+        } else {
+            _t.playLoop(nm);
+        }
     }
 })();
