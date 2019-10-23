@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index-204-load_sound</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+</head>
+<body>
+<div id="reversi"></div>
+<!---->
+<script src="js/game.core.js"></script>
+<!---->
+<script src="js/resource.sound.js"></script>
+<!---->
+<script>
+    (() => {
+        let r = [];
+        r.push(resource.sound.load("se0", "snd/se0", "se"));
+        r.push(resource.sound.load("se1", "snd/se1", "se"));
+        r.push(resource.sound.load("bgm0", "snd/bgm0"));
+        r.push(resource.sound.load("bgm1", "snd/bgm1"));
+        r.push(resource.sound.load("win", "snd/win"));
+        r.push(resource.sound.load("lose", "snd/lose"));
+
+        Promise.all(r).then(() => {
+            let css = {
+                width: "200px",
+                height: "50px",
+                display: "block"
+            };
+
+
+            // =====================================
+            mkBtn("開始", css, () => {
+                resource.sound.play("bgm0");
+            });
+
+            mkBtn("停止", css, () => {
+                resource.sound.stop("bgm0");
+            });
+
+            mkBtn("一時停止", css, () => {
+                resource.sound.pause("bgm0");
+            });
+            // =====================================
+
+            mkHR();
+
+            // =====================================
+            mkBtn("ループ開始", css, () => {
+                resource.sound.playLoop("se0-0");
+            });
+
+            mkBtn("停止", css, () => {
+                resource.sound.stop("se0-0");
+            });
+            // =====================================
+
+            mkHR();
+
+            // =====================================
+            mkBtn("SE開始", css, () => {
+                resource.sound.playSE("se1");
+            });
+
+            let cnt = 0;
+            mkBtn("BGM開始/切り替え", css, () => {
+                if (cnt === 0) {
+                    resource.sound.playBGM("bgm0");
+                } else {
+                    resource.sound.playBGM("bgm1");
+                }
+                cnt = 1 - cnt;
+            });
+            // =====================================
+
+        });
+
+        // let elBody = document.body;
+        let mkBtn = (nm, css, cb, parent) => {
+            let elBtn = document.createElement("button");
+            elBtn.value = nm;
+            //
+            let style = elBtn.style;
+            style.width = css.width;
+            style.height = css.height;
+            style.display = css.display;
+            //
+            elBtn.addEventListener("click", cb);
+            //
+            if (parent === undefined) parent = document.body;
+            parent.appendChild(elBtn);
+        };
+        let mkHR = (parent) => {
+            let elHR = document.createElement("hr");
+            if (parent === undefined) parent = document.body;
+            parent.appendChild(elHR);
+        }
+
+    })();
+</script>
+</body>
+</html>
