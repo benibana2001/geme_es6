@@ -31,6 +31,27 @@ if (window.game.canvas === undefined) window.game.canvas = {};
         return c;
     };
 
+    // 元画像 s, 作る画像 d
+    _t.getScaledImg = (img, sx, sy, sw, sh, dw, dh) => {
+        let rtX = dw / sw;
+        let rtY = dh / sh;
+
+        if (rtX >= 0.5 && rtY >= 0.5) {
+            let c = _t.genCnvs(dw, dh);
+            c.cntx.drawImage(img, sx, sy, sw, sh, 0, 0, dw, dh);
+            return c.cnvs;// HTML5では画像もキャンバスも区別なくdrawImageで貼り付けられる
+        } else {
+            // 50%未満
+            let w2 = (rtX < 0.5) ? Math.ceil(sw * 0.5) : dw;
+            let h2 = (rtY < 0.5) ? Math.ceil(sh * 0.5) : dh;
+
+            let c = _t.genCnvs(w2, h2);
+            c.cntx.drawImage(img, sx, sy, sw, sh, 0, 0, w2, h2);
+            let newImg = _t.getScaledImg(c.cnvs, 0, 0, w2, h2, dw, dh);
+            return newImg;
+        }
+    };
+
     _t.pthRRct = (cntx, x, y, w, h, r) => {
         let x2 = x + w;
         let y2 = y + h;
