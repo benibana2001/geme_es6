@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index-206-ui</title>
+</head>
+<body>
+<div id="reversi"></div>
+<!---->
+<script src="js/game.anim.js"></script>
+<script src="js/game.canvas.js"></script>
+<script src="js/game.core.js"></script>
+<script src="js/game.ui.js"></script>
+<!---->
+<script>
+    (() => {
+        let sz = game.core.getFitSz(10, 11);
+        let c = game.canvas.initCnvs("reversi", sz.w, sz.h, 1);
+
+        game.anim.add("bg", (tm) => {
+            c.cntx.fillStyle = "#faa";
+            c.cntx.fillRect(0, 0, c.w, c.h);
+        });
+
+        game.ui.init(c);
+
+        game.ui.addBtn("btn1", "Button1", 10, 10, 200, 50,
+            () => {
+                game.ui.rmvBtn("btn1");
+            });
+
+        game.ui.addBtn("btn2", "Button2", 10, 60, 200, 50,
+            () => {
+                game.ui.rmvBtn("btn1");
+            });
+        game.anim.strt();
+    })();
+</script>
+</body>
+</html>
