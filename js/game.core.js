@@ -7,9 +7,12 @@ if (window.game.core === undefined) window.game.core = {};
     _t.ua = {};
     _t.ua.pc = ! window.navigator.userAgent.match(/iphone | ipad | android | windows Phone/i);
 
+    // PRIVATE
     _t.getWinW = () => {
         return window.innerWidth
     };
+
+    // PRIVATE
     _t.getWinH = () => {
         return window.innerHeight
     };

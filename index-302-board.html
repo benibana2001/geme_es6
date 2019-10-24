@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index-302-board</title>
+</head>
+<body>
+<div id="reversi"></div>
+<!---->
+<script src="js/game.core.js"></script>
+<script src="js/game.core.js"></script>
+<!---->
+<script src="js/resource.image.js"></script>
+<!---->
+<script src="js/reversi.canvas.js"></script>
+<script src="js/reversi.reversi.js"></script>
+<!---->
+<script>
+    (() => {
+        let r = [];
+        r.push(resource.image.load("bg", "img/bg.png"));
+
+        Promise.all(r).then(() => {
+            reversi.canvas.initCnvs();
+            reversi.canvas.drwBg();
+            reversi.canvas.drwSqAll();
+        });
+    })();
+</script>
+</body>
+</html>

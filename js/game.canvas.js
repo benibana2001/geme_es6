@@ -52,6 +52,29 @@ if (window.game.canvas === undefined) window.game.canvas = {};
         }
     };
 
+    // マージン付き矩形塗り潰し
+    _t.fllMrgnRct = (cntx, x, y, w, h, m) => {
+        let rct = {x: x + m, y: y + m, w: w - m * 2, h: h - m * 2};
+        cntx.fillRect(rct.x, rct.y, rct.w, rct.h);
+        return rct;
+    };
+
+    // 閉じたパスの塗りつぶし（引数2以降で点XY座標の羅列を渡す）
+    _t.fllPth = (cntx) => {
+        cntx.beginPath();
+        for (let i = 1; i < arguments.length; i += 2) {
+            let x = arguments[i];
+            let y = arguments[i + 1];
+            if (i == 1) {
+                cntx.moveTo(x, y);
+            } else {
+                cntx.lineTo(x, y);
+            }
+        }
+        cntx.closePath();
+        cntx.fill();
+    };
+
     _t.pthRRct = (cntx, x, y, w, h, r) => {
         let x2 = x + w;
         let y2 = y + h;
