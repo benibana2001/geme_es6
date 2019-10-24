@@ -65,7 +65,7 @@ if (window.game.canvas === undefined) window.game.canvas = {};
         for (let i = 1; i < arguments.length; i += 2) {
             let x = arguments[i];
             let y = arguments[i + 1];
-            if (i == 1) {
+            if (i === 1) {
                 cntx.moveTo(x, y);
             } else {
                 cntx.lineTo(x, y);
