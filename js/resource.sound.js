@@ -38,7 +38,7 @@ if (window.resource.sound === undefined) window.resource.sound = {};
         }
         _t.canUse = _t.canOgg || _t.canMp3;
         _t.ext = _t.canOgg ? ".ogg" : (_t.canMp3 ? ".mpe" : "");
-        if (!game.core.ua.pc) _t.canUse = false;//モバイル時は不可
+        // if (!game.core.ua.pc) _t.canUse = false;//モバイル時は不可
     };
 
     _t.load = (nm, url, type) => {
