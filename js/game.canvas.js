@@ -7,7 +7,7 @@ if (window.game.canvas === undefined) window.game.canvas = {};
     _t.scl = 1;
 
     _t.genCnvs = (w, h, scl) => {
-        if (scl === undefined) {scl = 1}
+        if (scl === undefined) scl = 1;
         let cnvs = document.createElement("canvas");
         // console.log(cnvs);
         cnvs.width = w * scl;// メモリ上の画素数

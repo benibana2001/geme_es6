@@ -38,12 +38,12 @@ if (window.reversi.reversi === undefined) window.reversi.reversi = {};
         _t.brd[_t.XYToI(3, 4)] = _t.brd[_t.XYToI(4, 3)] = 1;
 
         //test.reversi.comSkp(_t);	// デバッグ COM スキップ
-        //test.reversi.endWin(_t);	// デバッグ 終了 勝利
+        // test.reversi.endWin(_t);	// デバッグ 終了 勝利
         //test.reversi.endLose(_t);	// デバッグ 終了 敗北
-        //test.reversi.endDraw(_t);	// デバッグ 終了 引き分け
-        //test.reversi.dbgArnd(_t);	// デバッグ 周囲判定
-        //test.reversi.dbg1(_t);	// デバッグ1
-        //test.reversi.dbg2(_t);	// デバッグ2
+        // test.reversi.endDraw(_t);	// デバッグ 終了 引き分け
+        // test.reversi.dbgArnd(_t);	// デバッグ 周囲判定
+        // test.reversi.dbg1(_t);	// デバッグ1
+        // test.reversi.dbg2(_t);	// デバッグ2
 
         // ゲーム終了判定
         _t.enblSqs = _t.getEnblSqs(_t.brd, _t.plyr);

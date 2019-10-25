@@ -177,8 +177,8 @@ if (window.reversi.canvas === undefined) window.reversi.canvas = {};
 
             // Draw Stones
             _cntx.drawImage(_imgs["tkn" + i], hlfSz * drc - hlfSz, - hlfSz);
-
         }
+        _cntx.restore();
     };
 
     _t.drwEnblSqs = (x, y) => {
