@@ -107,4 +107,86 @@ if (window.reversi.core === undefined) window.reversi.core = {};
             _t.clckBrd(sqX, sqY);
         });
     };
+
+    // 盤面クリック時の処理
+    _t.clckBrd = (x, y) => {
+        if (_t.lck) return;// ロック時は何もしない
+        if (_rvs.getPTyp() === _rvs.PTYP.com) return;// COMプレイ時は何もしない
+
+        // 石置き処理
+        let res = _rvs.putTkn(x, y);// 石が置けない場合はfalseが戻る
+        if (res) {
+            _t.lck = true;// クリックをロック
+            _t.doRev();// 裏返し処理
+        }
+    };
+
+    // 裏返し処理
+    _t.doRev = () => {
+        _snd.playSE("se0");
+        _re.putTkn().then(() => {
+            _t.playSERev();// 裏返りSE 裏返った石の数で効果音は変わる
+            return _re.chngBrd();
+        }).then(() => {
+            _t.updt();
+        });
+    };
+
+    // 裏返しSE
+    _t.playSERev = () => {
+        let max = _rvs.revTkns.length;// 裏返る石の数
+        if (max > _snd.seMax) max = _snd.seMax;// 同時発音数のチェック
+        for (let i = 0; i < max; i ++) {// 効果音の再生時間をずらす
+            setTimeout(() => {
+                _snd.playSE("se1");
+            }, 50 * i);
+        }
+    };
+
+    // 更新
+    _t.updt = () => {
+        _t.updtCnvs(true);// キャンバス更新 キャッシュを使用せず再描画
+
+        // 終了判定
+        if (_rvs.isEnd) {
+            // 結果計算
+            let msg = "LOSE", bgm = "lose";
+            if (_rvs.scr[0] >  _rvs.scr[1]) msg = "WIN"; bgm = "win";
+            if (_rvs.scr[0] === _rvs.scr[1]) msg = "DRAW";
+
+            // エフェクト
+            _re.msg("END").then(() => {
+                // 終了時サウンド
+                _snd.playBGM(bgm,() => {
+                    _snd.playBGM("bgm1");
+                    _t.btnStrt("Start");	// 開始ボタン
+                });
+                _re.msg(msg);// メッセージ表示(WIN or LOSE)
+            });
+            return;
+        }
+
+        // スキップが必要か確認
+        if (_rvs.enblSqs.length === 0) {
+            _re.msg("SKIP").then(() => {
+                _rvs.skp();
+                _t.updt();
+            });
+            return;
+        }
+
+        // COMか確認
+        if (_rvs.getPTyp() === _rvs.PTYP.com) {
+            setTimeout(() => {
+                // 石置き処理
+                let put = reversi.com.get();// COMの指し手を取得
+                _rvs.putTkn(put.x, put.y);
+                _t.doRev();// 裏返し処理
+            }, 250);
+            return;
+        }
+
+        // スキップやCOMがなければロック解除
+        _t.lck = false;
+    };
 })();
