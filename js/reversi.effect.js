@@ -23,7 +23,7 @@ if (window.reversi.effect === undefined) window.reversi.effect = {};
         let put = _rvs.put;// 石を置いた位置の座標
         let plyr = _rvs.plyrOld;// すでに手番が写っているので
         let cntx = _rc.c.cntx;
-        let img = resouce.image.imgs["tkn" + plyr];
+        let img = resource.image.imgs["tkn" + plyr];
         let r = _rc.xyToReal(put.x, put.y);
         let hlfSz = _rc.l.sqSz / 2;
 
@@ -52,7 +52,6 @@ if (window.reversi.effect === undefined) window.reversi.effect = {};
 
     // 盤面変更
     _t.chngBrd = function () {
-        let d = $.Deferred();
         let tmStrt = _ga.tm.sum;// 開始時間
         let tmMax = 750;// エフェクト終了までの時間
         let nm = "chngBrd";

@@ -131,7 +131,7 @@ if (window.reversi.reversi === undefined) window.reversi.reversi = {};
     // 石置き処理
     _t.putTkn = (x, y) => {
         // 石置き可能かの判定
-        for (let i = 0; i < _t.enblSqs.length; i ++) {
+        for (let i = 0; i < _t.enblSqs.length; i++) {
             let eSq = _t.enblSqs[i];
             if (eSq.x === x && eSq.y === y) {
                 // 石置き後盤面の作成
@@ -161,12 +161,12 @@ if (window.reversi.reversi === undefined) window.reversi.reversi = {};
         _t.revTkns = [];// 裏返った石配列
         let plyrEne = 1 - plyr;
 
-        for (let i = 0; i < 8; i ++) {
+        for (let i = 0; i < 8; i++) {
             let ln = _t.scnLn(brd, x, y, _t.DRC[i].x, _t.DRC[i].y);
             let re = new RegExp("^(" + plyrEne + "+)" + plyr);
             let m = ln.ptrn.match(re);
             if (m == null) continue;// 置けるマスがなかった場合は次の処理へ
-            for (let j = 0; j < m[1].length; j ++) {
+            for (let j = 0; j < m[1].length; j++) {
                 brd[_t.XYToI(ln.arr[j].x, ln.arr[j].y)] = plyr;
                 _t.revTkns.push(ln.arr[j]);
             }
