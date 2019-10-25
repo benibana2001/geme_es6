@@ -163,6 +163,22 @@ if (window.reversi.canvas === undefined) window.reversi.canvas = {};
         }
     };
 
+    _t.drwEnblSqs = (x, y) => {
+		let r = _t.xyToReal(x, y);
+		_cntx.save();
+		_cntx.fillStyle = "#f00";
+		_cntx.globalAlpha = 0.66;
+		_gcnvs.fllMrgnRct(_cntx, r.x, r.y, _sqSz, _sqSz, 2);
+		_cntx.restore();
+	};
+
+    _t.drwEnblSqsAll = () => {
+        let sqs = _rvs.enblSqs;
+        for (var i = 0; i < sqs.length; i ++) {
+            _t.drwEnblSqs(sqs[i].x, sqs[i].y);
+        }
+    };
+
     // Generate Cache
     _t.genCsh = () => {
         let c = _imgs["cshBg"];// キャッシュが未作成の場合はundefinedが格納される
