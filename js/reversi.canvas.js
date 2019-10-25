@@ -18,8 +18,8 @@ if (window.reversi.canvas === undefined) window.reversi.canvas = {};
         brdX: 0, brdY: 0,//board
         brdW: 0, brdH: 0,
         pScr: [
-            {x: 0, y: 0, w: 0, align: "left"},// Player Score
-            {x: 0, y: 0, w: 0, align: "right"}// Player Score
+            {x: 0, y: 0, w: 0, algn: "left"},// Player Score
+            {x: 0, y: 0, w: 0, algn: "right"}// Player Score
         ],
         fntSz: 0,
         fntFmly: "ArchivoBlack"
@@ -139,6 +139,24 @@ if (window.reversi.canvas === undefined) window.reversi.canvas = {};
         _rvs.scnBrd((i, x, y) => {
             _t.drwTkn(x, y, brd[i]);
         });
+    };
+
+    _t.drwPScrAll = () => {
+        _t.drwPScr(0, _rvs.scr[0]);
+        _t.drwPScr(1, _rvs.scr[1]);
+    };
+
+    _t.drwPScr = (plyr, scr) => {
+        let l = _t.l;
+        let lScr = l.pScr[plyr];
+        let nm = ["YOU", "COM"][plyr];
+        scr = ("0" + scr).substr(-2);
+
+        _cntx.textAlign = lScr.algn;
+        _cntx.textBaseline = "middle";
+        _cntx.fillStyle = "#000";
+        _cntx.font = l.fntSz + "px '" + l.fntFmly + "'";
+        _cntx.fillText(nm + scr, lScr.x, lScr.y, lScr.w);
     };
 
     _t.drwPlyr = () => {
