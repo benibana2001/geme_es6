@@ -60,7 +60,7 @@ if (window.game.canvas === undefined) window.game.canvas = {};
     };
 
     // 閉じたパスの塗りつぶし（引数2以降で点XY座標の羅列を渡す）
-    _t.fllPth = (cntx) => {
+    _t.fllPth = function(cntx) {
         cntx.beginPath();
         for (let i = 1; i < arguments.length; i += 2) {
             let x = arguments[i];
