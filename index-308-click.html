@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index-308-click</title>
+</head>
+<body>
+<div id="reversi"></div>
+<!---->
+<script src="js/game.canvas.js"></script>
+<script src="js/game.core.js"></script>
+<!---->
+<script src="js/resource.image.js"></script>
+<!---->
+<script src="js/reversi.canvas.js"></script>
+<script src="js/reversi.reversi.js"></script>
+<!---->
+<script>
+    (() => {
+        let r = [];
+        r.push(resource.image.load("bg", "img/bg.png"));
+
+        Promise.all(r).then(() => {
+            reversi.canvas.initCnvs();
+            reversi.canvas.drwBg();
+            reversi.canvas.drwSqAll();
+
+            let c = reversi.canvas.c;
+            let l = reversi.canvas.l;
+            let rng = game.core.inRng;
+
+            c.cnvs.addEventListener("click", (e) => {
+                let x = e.offsetX * game.canvas.scl;
+                let y = e.offsetY * game.canvas.scl;
+
+                // クリック判定 盤面内外
+                if (! rng(x, y, l.brdX, l.brdY, l.brdW, l.brdH)) return;
+
+                // 何マス目かを計算
+                let sqX = ((x - l.brdX) / l.sqSz) | 0;
+                let sqY = ((x - l.brdY) / l.sqSz) | 0;
+                console.log(sqX, sqY);
+            });
+        })
+    })();
+</script>
+</body>
+</html>
