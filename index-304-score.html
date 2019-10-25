@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index-304-score</title>
+</head>
+<body>
+<div id="reversi"></div>
+<!---->
+<script src="js/game.canvas.js"></script>
+<script src="js/game.core.js"></script>
+<!---->
+<script src="js/resource.font.js"></script>
+<script src="js/resource.image.js"></script>
+<!---->
+<script src="js/reversi.canvas.js"></script>
+<script src="js/reversi.reversi.js"></script>
+<!---->
+<script>
+    let r = [];
+    r.push(resource.image.load("bg", "img/bg.png"));
+    r.push(resource.image.load("_tkn0", "img/token0.png"));
+    r.push(resource.image.load("_tkn1", "img/token1.png"));
+
+    r.push(resource.font.load("serf", "ArchivoBlack", "serif"));
+
+    Promise.all(r).then(() => {
+        reversi.canvas.initCnvs();
+        reversi.canvas.drwBg();
+        reversi.canvas.drwSqAll();
+
+        // Resize Stone
+        reversi.canvas.rszTkn();
+
+        // Draw Stone
+        reversi.canvas.drwTkn(3, 3, 0);
+        reversi.canvas.drwTkn(4, 4, 0);
+        reversi.canvas.drwTkn(3, 4, 1);
+        reversi.canvas.drwTkn(4, 3, 1);
+
+        reversi.canvas.drwPScrAll();// Draw All SCORE
+    });
+</script>
+</body>
+</html>

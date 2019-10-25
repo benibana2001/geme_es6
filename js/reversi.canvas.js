@@ -140,4 +140,40 @@ if (window.reversi.canvas === undefined) window.reversi.canvas = {};
             _t.drwTkn(x, y, brd[i]);
         });
     };
+
+    _t.drwPlyr = () => {
+        let l = _t.l;
+        let hlfSz = _sqSz / 2;// Tokenの半分サイズ
+
+        _cntx.save();
+        _cntx.translate(_t.c.cnvs.width / 2, l.pScr[0].y);
+
+        for (let i = 0; i < 2; i++) {
+            let drc = [-1, 1][i];// x軸方向 盤面のセンターを原点と取ったので Playe1, 2はそれぞれプラスマイナスで方向を表せる
+            _cntx.fillStyle = i === _rvs.plyr ? "#c00" : "#aaa";
+
+            _cntx.beginPath();
+            _cntx.arc(hlfSz * drc, 0, hlfSz, 0, Math.PI * 2, false);
+            _cntx.closePath();
+            _cntx.fill();
+
+            // Draw Stones
+            _cntx.drawImage(_imgs["tkn" + i], hlfSz * drc - hlfSz, - hlfSz);
+
+        }
+    };
+
+    // Generate Cache
+    _t.genCsh = () => {
+        let c = _imgs["cshBg"];// キャッシュが未作成の場合はundefinedが格納される
+        if (!c) {
+            c = _imgs["cshBg"] = _gcnvs.genCnvs(_t.c.w, _t.c.h);
+        }
+        c.cntx.drawImage(_t.c.cnvs, 0, 0);
+    };
+
+    // Draw Cache
+    _t.drwCsh = () => {
+        _cntx.drawImage(_imgs.cshBg.cnvs, 0, 0);
+    };
 })();

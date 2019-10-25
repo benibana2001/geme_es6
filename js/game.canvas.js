@@ -9,7 +9,7 @@ if (window.game.canvas === undefined) window.game.canvas = {};
     _t.genCnvs = (w, h, scl) => {
         if (scl === undefined) {scl = 1}
         let cnvs = document.createElement("canvas");
-        console.log(cnvs);
+        // console.log(cnvs);
         cnvs.width = w * scl;// メモリ上の画素数
         cnvs.height = h * scl;
         cnvs.innerWidth = w;// Web表示
@@ -86,5 +86,5 @@ if (window.game.canvas === undefined) window.game.canvas = {};
         cntx.arcTo(x,  y2, x,  y,  r);	// 左下
         cntx.arcTo(x,  y,  x2, y,  r);	// 左上
         cntx.closePath();
-    }
+    };
 })();
