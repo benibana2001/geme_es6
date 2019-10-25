@@ -26,7 +26,7 @@ if (window.reversi.core === undefined) window.reversi.core = {};
         r.push(resource.sound.load("se1", "snd/se1", "se"));
         r.push(resource.sound.load("bgm0", "snd/Mint_Chocolate_2a"));
         r.push(resource.sound.load("bgm1", "snd/Saga_of_Seven_Bucks"));
-        r.push(resource.sound.load("win", "snd/win"));
+        r.push(resource.sound.load("win", "snd/dra"));
         r.push(resource.sound.load("lose", "snd/lose"));
         r.push(resource.font.load("serif ", "ArchivoBlack, serif"));
 
