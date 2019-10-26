@@ -26,7 +26,6 @@ if (window.reversi.core === undefined) window.reversi.core = {};
         r.push(resource.sound.load("se1", "snd/se1", "se"));
         r.push(resource.sound.load("bgm0", "snd/Mint_Chocolate_2a"));
         r.push(resource.sound.load("bgm1", "snd/Saga_of_Seven_Bucks"));
-        r.push(resource.sound.load("win", "snd/dra"));
         r.push(resource.sound.load("lose", "snd/lose"));
         r.push(resource.font.load("serif ", "ArchivoBlack, serif"));
 
@@ -136,7 +135,7 @@ if (window.reversi.core === undefined) window.reversi.core = {};
     _t.playSERev = () => {
         let max = _rvs.revTkns.length;// 裏返る石の数
         if (max > _snd.seMax) max = _snd.seMax;// 同時発音数のチェック
-        for (let i = 0; i < max; i ++) {// 効果音の再生時間をずらす
+        for (let i = 0; i < max; i++) {// 効果音の再生時間をずらす
             setTimeout(() => {
                 _snd.playSE("se1");
             }, 50 * i);
@@ -146,25 +145,49 @@ if (window.reversi.core === undefined) window.reversi.core = {};
     // 更新
     _t.updt = () => {
         _t.updtCnvs(true);// キャンバス更新 キャッシュを使用せず再描画
-
         // 終了判定
         if (_rvs.isEnd) {
-            // 結果計算
+            let isWin = false, isDraw = false;
             let msg = "LOSE", bgm = "lose";
-            if (_rvs.scr[0] >  _rvs.scr[1]) msg = "WIN"; bgm = "win";
-            if (_rvs.scr[0] === _rvs.scr[1]) msg = "DRAW";
 
-            // エフェクト
-            _re.msg("END").then(() => {
-                // 終了時サウンド
-                _snd.playBGM(bgm,() => {
-                    _snd.playBGM("bgm1");
-                    _t.btnStrt("Start");	// 開始ボタン
+            isWin = _rvs.scr[0] > _rvs.scr[1];
+            isDraw = _rvs.scr[0] === _rvs.scr[1];
+
+            let jdgWing = () => {
+                let f = (resolve, reject) => {
+                    if (isWin) {
+                        console.log("WIN");
+                        return resource.sound.load("win", "snd/dra")
+                            .then(() => {
+                                msg = "WIN";
+                                bgm = "win";
+                                resolve();
+                            });
+                    } else if (isDraw) {
+                        msg = "DRAW";
+                        resolve();
+                    } else {
+                        resolve();
+                    }
+                };
+                return new Promise(f);
+            };
+
+            jdgWing()
+                .then(() => {
+                    return _re.msg("END");
+                })
+                .then(() => {
+                    // 終了時サウンド
+                    _snd.playBGM(bgm, () => {
+                        _snd.playBGM("bgm1");
+                        _t.btnStrt("Start");	// 開始ボタン
+                    });
+                    _re.msg(msg);// メッセージ表示(WIN or LOSE)
                 });
-                _re.msg(msg);// メッセージ表示(WIN or LOSE)
-            });
             return;
         }
+
 
         // スキップが必要か確認
         if (_rvs.enblSqs.length === 0) {

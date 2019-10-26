@@ -141,7 +141,6 @@ if (window.reversi.effect === undefined) window.reversi.effect = {};
 
                 } else {// 最大時間を超えたら終了
                     _ga.rmv(nm);
-                    console.log("DO RESOLVE");
                     resolve();
                 }
             });

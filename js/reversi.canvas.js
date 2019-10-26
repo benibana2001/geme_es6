@@ -149,7 +149,7 @@ if (window.reversi.canvas === undefined) window.reversi.canvas = {};
     _t.drwPScr = (plyr, scr) => {
         let l = _t.l;
         let lScr = l.pScr[plyr];
-        let nm = ["YOU", "COM"][plyr];
+        let nm = ["あなた", "キャット"][plyr];
         scr = ("0" + scr).substr(-2);
 
         _cntx.textAlign = lScr.algn;
